@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-public class Move : MonoBehaviour {
+public class Move : MonoBehaviour 
+{
 
     public GameObject goal;
     Vector3 direction;
-    float speed = 0.005f;
+    public float speed = 5f;
 
     void Start() 
     {
@@ -14,7 +15,12 @@ public class Move : MonoBehaviour {
 
     private void LateUpdate() 
     {
-        Vector3 velocity = direction.normalized * speed;
-        this.transform.position = this.transform.position;
+        direction = goal.transform.position - this.transform.position;
+        this.transform.LookAt(goal.transform.position);
+        if (direction.magnitude > 2)
+        {
+            Vector3 velocity = direction.normalized * speed * Time.deltaTime;
+            this.transform.position = this.transform.position + velocity;
+        }
     }
 }
